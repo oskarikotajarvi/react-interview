@@ -1,0 +1,40 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Bar tests... Matches snapshot 1`] = `
+<div
+  className="wrapper"
+>
+  <form
+    className="bar-form"
+    data-testid="bar-form"
+    onSubmit={[Function]}
+  >
+    <div>
+      <input
+        className="bar-form-control"
+        data-testid="bar-input"
+        name="newTodo"
+        onChange={[Function]}
+        required={true}
+        type="text"
+        value=""
+      />
+      <label
+        className="bar-form-control-placeholder"
+        data-testid="bar-label"
+        htmlFor="newTodo"
+      >
+        Add new todo
+      </label>
+      <button
+        className="btn btn-submit"
+        data-testid="bar-submit"
+        type="submit"
+        value="Submit"
+      >
+        Submit
+      </button>
+    </div>
+  </form>
+</div>
+`;

@@ -1,0 +1,22 @@
+.todo-title {
+  text-align: left;
+  flex: 4;
+}
+
+.todo-title.complete {
+  text-decoration: line-through;
+}
+
+.ctrl-btn.complete {
+  color: green;
+}
+
+.btn-trash {
+  color: red !important;
+}
+
+.btn-pair {
+  display: flex;
+  justify-content: right;
+  flex: 2;
+}

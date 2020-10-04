@@ -1,147 +1,73 @@
-import React from 'react';
+import React, { useState } from 'react';
+import Bar from './components/bar/Bar';
+import TodoItem from './components/todoitem/TodoItem';
 import './App.css';
 
-const todos = [
-    {id: 1, name: 'Go to the supermarket', complete: false},
-    {id: 2, name: 'Call Alice', complete: false},
-    {id: 3, name: 'Ask Alice to call Bob', complete: false},
-    {id: 4, name: 'Do the dishes', complete: false},
-    {id: 5, name: 'Change car tyres', complete: false}
-];
+const App = () => {
+  //Initial todos for the app
+  const initialTodos = [
+    { id: 1, name: 'Go to the supermarket', complete: false },
+    { id: 2, name: 'Call Alice', complete: false },
+    { id: 3, name: 'Ask Alice to call Bob', complete: false },
+    { id: 4, name: 'Do the dishes', complete: false },
+    { id: 5, name: 'Change car tyres', complete: false }
+  ];
 
-class App extends React.Component {
-    constructor(props) {
-        super(props);
-        this.state = {
-            newTodoName: '',
-            todos: todos
-        };
-    }
+  const [todos, setTodos] = useState(initialTodos);
 
-    generateNewId() {
-        return this.state.todos.length + 1;
-    }
+  /**
+   * Submit a new todo
+   * @param {string} newTodo - name of the new todo
+   */
+  const submitTodo = newTodo => {
+    const newTodos = todos.slice();
+    newTodos.push({
+      id: todos.length + 1,
+      name: newTodo,
+      complete: false
+    });
+    setTodos(newTodos);
+  };
 
-    onSubmit(event) {
-        event.preventDefault();
+  /**
+   * Toggle the completion status of a todo
+   * @param {number} id - id of the todo to edit
+   */
+  const toggleTodoStatus = todo => {
+    const todoItems = todos.slice();
+    const index = todoItems.indexOf(todo);
+    todoItems[index].complete = !todoItems[index].complete;
+    setTodos(todoItems);
+  };
 
-        var newTodos = this.state.todos.slice();
-        newTodos.push({
-            id: this.generateNewId(),
-            name: this.state.newTodoName,
-            complete: false
-        });
+  /**
+   * Remove a todo from the todo list
+   * @param {number} id - id of the todo to remove
+   */
+  const removeTodo = id => {
+    const todoItems = todos.filter(todo => todo.id !== id);
+    setTodos(todoItems);
+  };
 
-        this.setState({todos: newTodos, newTodoName: ''});
-    }
+  return (
+    <div>
+      <h3>Todos</h3>
+      {todos.map(todo => (
+        <TodoItem
+          key={todo.id}
+          todo={todo}
+          toggleComplete={toggleTodoStatus}
+          onRemove={removeTodo}
+        />
+      ))}
+      <Bar onSubmit={submitTodo} />
+    </div>
+  );
 
-    onClick(id) {
-        var todoItems = this.state.todos.slice();
-        for (let i = 0; i < this.state.todos.length; i++) {
-            if (todoItems[i].id === id) {
-                var newComplete = !todoItems[i].complete;
-                todoItems[i].complete = newComplete;
-            }
-        }
-
-        this.setState({
-            todos: todoItems
-        });
-    }
-
-    onChange(event) {
-        this.setState({newTodoName: event.target.value});
-    }
-    onRemoveClick(id) {
-        //implement this logic
-        console.log('Remove Item!');
-    }
-
-    render() {
-        return (
-            <div className="">
-                {this.todoItems()}
-                <Bar
-                    onSubmit={this.onSubmit.bind(this)}
-                    newTodoName={this.state.newTodoName}
-                    onInputChange={this.onChange.bind(this)}
-                />
-            </div>
-        );
-    }
-
-    todoItems = () => {
-        var retVal = [];
-
-        for (let i = 0; i < this.state.todos.length; i++) {
-            var todo = this.state.todos[i];
-            retVal.push(
-                <Hello
-                    key={todo.id}
-                    todo={todo}
-                    onClick={this.onClick.bind(this)}
-                    onRemoveClick={this.onRemoveClick.bind(this)}
-                />
-            );
-        }
-        return retVal;
-    };
-}
-
-class Hello extends React.Component {
-    render() {
-        var color;
-        var text;
-
-        if (this.props.todo.complete === true) {
-            color = 'lightgreen';
-            text = 'Complete';
-        } else {
-            color = 'pink';
-            text = 'Incomplete';
-        }
-
-        return (
-            <div className="wrapper" style={{backgroundColor: color}}>
-                <h3>{this.props.todo.name}</h3>
-                <button
-                    className="btn"
-                    onClick={() => this.props.onClick(this.props.todo.id)}>
-                    {text}
-                </button>
-                <button
-                    className="btn"
-                    onClick={() =>
-                        this.props.onRemoveClick(this.props.todo.id)
-                    }>
-                    Remove from list
-                </button>
-            </div>
-        );
-    }
-}
-
-class Bar extends React.Component {
-    render() {
-        return (
-            <form
-                className="wrapper"
-                style={{'grid-template-columns': '7fr 2fr'}}
-                onSubmit={this.props.onSubmit}>
-                <input
-                    placeholder="Add new todo"
-                    value={this.props.newTodoName}
-                    onChange={this.props.onInputChange}
-                />
-                <button
-                    className="btn btn-success"
-                    type="submit"
-                    value="Submit">
-                    Submit
-                </button>
-            </form>
-        );
-    }
-}
+  //onRemoveClick(id) {
+  ////implement this logic
+  //console.log('Remove Item!');
+  //}
+};
 
 export default App;

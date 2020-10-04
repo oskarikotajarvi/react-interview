@@ -1,0 +1,41 @@
+.bar-container {
+  display: flex;
+  justify-content: center;
+  margin-top: 1.4rem;
+}
+
+.bar-form div {
+  display: flex;
+  flex-direction: row;
+  margin: 5px 0;
+  position: relative;
+  margin-bottom: 1.5rem;
+  width: 400px;
+  max-width: 400px;
+  min-width: 200px;
+}
+
+.bar-form-control-placeholder {
+  position: absolute;
+  top: 0;
+  padding: 7px 0 0 13px;
+  transition: all 200ms;
+  opacity: 0.5;
+  pointer-events: none;
+}
+
+.bar-form-control {
+  margin-bottom: 8px;
+  height: 2rem;
+  width: 300px;
+  outline: 0;
+  border-width: 0 0 2px;
+  font-size: 1rem;
+}
+
+.bar-form-control:focus + .bar-form-controller-placeholder,
+.bar-form-control:valid + .bar-form-control-placeholder {
+  font-size: 75%;
+  transform: translate3d(0, -100%, 0);
+  opacity: 1;
+}
